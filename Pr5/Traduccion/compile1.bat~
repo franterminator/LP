@@ -1,0 +1,5 @@
+cls
+prompt $G
+if exist (del prog1.exe)
+gcc prog1.c -o2 -o prog.exe
+pause

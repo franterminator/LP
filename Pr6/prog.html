@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>prog.c</title>
+<meta name="generator" content="emacs 24.4.1; htmlfontify 0.21" />
+<style type="text/css"><!-- 
+body { font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #e1e1e0;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.default   { font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #e1e1e0;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.default a { font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #e1e1e0;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.keyword   { color: #ffad29;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.keyword a { color: #ffad29;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.function-name   { color: #00ede1;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.function-name a { color: #00ede1;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.type   { color: #34cae2;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.type a { color: #34cae2;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.comment   { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.comment a { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.comment-delimiter   { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.comment-delimiter a { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.variable-name   { color: #dbdb95;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.variable-name a { color: #dbdb95;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.string   { color: #e67128;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.string a { color: #e67128;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.preprocessor   { color: #23d7d7;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.preprocessor a { color: #23d7d7;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+ --></style>
+
+    <script type="text/javascript"><!--
+  // this function is needed to work around
+  // a bug in IE related to element attributes
+  function hasClass(obj)
+  {
+      var result = false;
+      if (obj.getAttributeNode("class") != null)
+      {
+          result = obj.getAttributeNode("class").value;
+      }
+      return result;
+  }
+
+  function stripe(id)
+  {
+      // the flag we'll use to keep track of
+      // whether the current row is odd or even
+      var even = false;
+
+      // if arguments are provided to specify the colors
+      // of the even & odd rows, then use the them;
+      // otherwise use the following defaults:
+      var evenColor = arguments[1] ? arguments[1] : "#fff";
+      var oddColor  = arguments[2] ? arguments[2] : "#ddd";
+
+      // obtain a reference to the desired table
+      // if no such table exists, abort
+      var table = document.getElementById(id);
+      if (! table) { return; }
+
+      // by definition, tables can have more than one tbody
+      // element, so we'll have to get the list of child
+      // &lt;tbody&gt;s
+      var tbodies = table.getElementsByTagName("tbody");
+
+      // and iterate through them...
+      for (var h = 0; h < tbodies.length; h++)
+      {
+          // find all the &lt;tr&gt; elements...
+          var trs = tbodies[h].getElementsByTagName("tr");
+
+          // ... and iterate through them
+          for (var i = 0; i < trs.length; i++)
+          {
+              // avoid rows that have a class attribute
+              // or backgroundColor style
+              if (! hasClass(trs[i]) &&
+                  ! trs[i].style.backgroundColor)
+              {
+                  // get all the cells in this row...
+                  var tds = trs[i].getElementsByTagName("td");
+
+                  // and iterate through them...
+                  for (var j = 0; j < tds.length; j++)
+                  {
+                      var mytd = tds[j];
+
+                      // avoid cells that have a class attribute
+                      // or backgroundColor style
+                      if (! hasClass(mytd) &&
+                          ! mytd.style.backgroundColor)
+                      {
+                          mytd.style.backgroundColor =
+                            even ? evenColor : oddColor;
+                      }
+                  }
+              }
+              // flip from odd to even, or vice-versa
+              even =  ! even;
+          }
+      }
+  }
+
+  function toggle_invis( name )
+  {
+      var filter =
+        { acceptNode:
+          function( node )
+          { var classname = node.id;
+            if( classname )
+            { var classbase = classname.substr( 0, name.length );
+              if( classbase == name ) { return NodeFilter.FILTER_ACCEPT; } }
+            return NodeFilter.FILTER_SKIP; } };
+      var walker = document.createTreeWalker( document.body           ,
+                                              NodeFilter.SHOW_ELEMENT ,
+                                              filter                  ,
+                                              false                   );
+      while( walker.nextNode() )
+      {
+          var e = walker.currentNode;
+          if( e.style.display == "none" ) { e.style.display = "inline"; }
+          else                            { e.style.display = "none";   }
+      }
+  }
+--> </script>
+  </head>
+  <body onload="stripe('index'); return true;">
+
+<pre><span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="string">&lt;stdlib.h&gt;</span>
+
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="variable-name">PI</span> 3.14159265358979324
+
+<span class="comment-delimiter">/</span><span class="comment-delimiter">/</span><span class="comment">este programa calcula el valor de Pi mediante un metodo de Monte-Carlo
+</span><span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="function-name">main</span>(<span class="type">int</span> <span class="variable-name">argc</span>, <span class="type">char</span> *<span class="variable-name">argv</span>[])
+{
+  <span class="type">in</span><span class="type">t</span> <span class="variable-name">n</span>;                   <span class="comment-delimiter">/</span><span class="comment-delimiter">/</span><span class="comment">numero de iteraciones
+</span>  <span class="type">u</span><span class="type">nsigned</span> <span class="type">in</span><span class="type">t</span> <span class="variable-name">seed</span>;       <span class="comment-delimiter">//</span><span class="comment">semilla para cambiar el nº aleatorio generado
+</span>
+  <span class="keyword">while</span>(0 &lt; 10){
+    printf(<span class="string">&quot;\n Introduce un numero de iteraciones: &quot;</span>);
+    scanf(<span class="string">&quot;%d&quot;</span>, &amp;n);
+    <span class="keyword">if</span>(n &gt; 0) <span class="keyword">break</span>;
+  }
+  
+  <span class="keyword">while</span>(0 &lt; 10){
+    printf(<span class="string">&quot;\n Introduce la semilla: &quot;</span>);
+    scanf(<span class="string">&quot;%d&quot;</span>, &amp;seed);
+    <span class="keyword">if</span>(seed &gt; 0) <span class="keyword">break</span>;
+  }
+
+  <span class="comment-delimiter">/</span><span class="comment-delimiter">/</span><span class="comment">inicializamos la generación de Nº aleatorios
+</span>  srand(seed);
+
+  <span class="comment-delimiter">/</span><span class="comment-delimiter">/</span><span class="comment">simulación
+</span>  <span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="variable-name">nf</span>=0;
+  <span class="type">in</span><span class="type">t</span> <span class="variable-name">i</span>;
+  <span class="keyword">for</span> (i = 0; i &lt; n; i++) {
+    <span class="type">doubl</span><span class="type">e</span> <span class="variable-name">x</span> = (<span class="type">double</span>) rand()/RAND_MAX;
+    <span class="type">doubl</span><span class="type">e</span> <span class="variable-name">y</span> = (<span class="type">double</span>) rand()/RAND_MAX;
+    <span class="keyword">if</span>(x*x+y*y &lt; 1.)
+      nf++;
+  }
+
+  <span class="type">doubl</span><span class="type">e</span> <span class="variable-name">pi_aprox</span> = 4. * (<span class="type">double</span>) nf / (<span class="type">double</span>)n;
+  <span class="type">doubl</span><span class="type">e</span> <span class="variable-name">error</span> = (pi_aprox - PI)/PI;
+
+  <span class="comment-delimiter">/</span><span class="comment-delimiter">/</span><span class="comment">imprimimos los resultados
+</span>  printf(<span class="string">&quot;\n RESULTADOS: \
+          \n   n  = %02d ; nf = %02d  \
+          \n   PI (aprox)     = %20.6f\
+          \n   PI (exacto)    = %20.6f\
+          \n   error relativo = %8.4f&quot;</span>,
+         n,nf,pi_aprox,PI,error);
+
+  <span class="comment-delimiter">/</span><span class="comment-delimiter">/</span><span class="comment">para cerrar el programa el usuario debera pulsar una tecla
+</span>  fflush(stdin); getchar();
+  
+  <span class="keyword">return</span> 0;
+}
+</pre>
+
+ </body>
+</html>

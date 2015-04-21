@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>prog.c</title>
+<meta name="generator" content="emacs 24.4.1; htmlfontify 0.21" />
+<style type="text/css"><!-- 
+body { font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #e1e1e0;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.default   { font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #e1e1e0;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.default a { font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #e1e1e0;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.keyword   { color: #ffad29;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.keyword a { color: #ffad29;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.function-name   { color: #00ede1;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.function-name a { color: #00ede1;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.type   { color: #34cae2;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.type a { color: #34cae2;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.variable-name   { color: #dbdb95;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.variable-name a { color: #dbdb95;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.string   { color: #e67128;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.string a { color: #e67128;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.preprocessor   { color: #23d7d7;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.preprocessor a { color: #23d7d7;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.comment   { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.comment a { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.comment-delimiter   { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.comment-delimiter a { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+ --></style>
+
+    <script type="text/javascript"><!--
+  // this function is needed to work around
+  // a bug in IE related to element attributes
+  function hasClass(obj)
+  {
+      var result = false;
+      if (obj.getAttributeNode("class") != null)
+      {
+          result = obj.getAttributeNode("class").value;
+      }
+      return result;
+  }
+
+  function stripe(id)
+  {
+      // the flag we'll use to keep track of
+      // whether the current row is odd or even
+      var even = false;
+
+      // if arguments are provided to specify the colors
+      // of the even & odd rows, then use the them;
+      // otherwise use the following defaults:
+      var evenColor = arguments[1] ? arguments[1] : "#fff";
+      var oddColor  = arguments[2] ? arguments[2] : "#ddd";
+
+      // obtain a reference to the desired table
+      // if no such table exists, abort
+      var table = document.getElementById(id);
+      if (! table) { return; }
+
+      // by definition, tables can have more than one tbody
+      // element, so we'll have to get the list of child
+      // &lt;tbody&gt;s
+      var tbodies = table.getElementsByTagName("tbody");
+
+      // and iterate through them...
+      for (var h = 0; h < tbodies.length; h++)
+      {
+          // find all the &lt;tr&gt; elements...
+          var trs = tbodies[h].getElementsByTagName("tr");
+
+          // ... and iterate through them
+          for (var i = 0; i < trs.length; i++)
+          {
+              // avoid rows that have a class attribute
+              // or backgroundColor style
+              if (! hasClass(trs[i]) &&
+                  ! trs[i].style.backgroundColor)
+              {
+                  // get all the cells in this row...
+                  var tds = trs[i].getElementsByTagName("td");
+
+                  // and iterate through them...
+                  for (var j = 0; j < tds.length; j++)
+                  {
+                      var mytd = tds[j];
+
+                      // avoid cells that have a class attribute
+                      // or backgroundColor style
+                      if (! hasClass(mytd) &&
+                          ! mytd.style.backgroundColor)
+                      {
+                          mytd.style.backgroundColor =
+                            even ? evenColor : oddColor;
+                      }
+                  }
+              }
+              // flip from odd to even, or vice-versa
+              even =  ! even;
+          }
+      }
+  }
+
+  function toggle_invis( name )
+  {
+      var filter =
+        { acceptNode:
+          function( node )
+          { var classname = node.id;
+            if( classname )
+            { var classbase = classname.substr( 0, name.length );
+              if( classbase == name ) { return NodeFilter.FILTER_ACCEPT; } }
+            return NodeFilter.FILTER_SKIP; } };
+      var walker = document.createTreeWalker( document.body           ,
+                                              NodeFilter.SHOW_ELEMENT ,
+                                              filter                  ,
+                                              false                   );
+      while( walker.nextNode() )
+      {
+          var e = walker.currentNode;
+          if( e.style.display == "none" ) { e.style.display = "inline"; }
+          else                            { e.style.display = "none";   }
+      }
+  }
+--> </script>
+  </head>
+  <body onload="stripe('index'); return true;">
+
+<pre><span class="comment-delimiter">/</span><span class="comment-delimiter">*</span><span class="comment">
+PROGRAMA PARA DERIVAR UN POLINOMIO
+
+   1. El usuario introduce los datos del polinomio, esto se hace en el metodo leerCoeficientes()
+   Polinomio que sigue esta forma:
+   P_n(x) = a_0 + a_1*x + a_2*x^2 + a_3*x^3 + ... + a_n*x^n
+   Donde n es el grado del polinomio.
+   
+   2. Luego el usuario introduce el punto z.
+   Se realiza el cambio de base a la base (x-z). Para ello se divide el polinomio por (x-z).
+   Esto se realiza en el metodo divisionSintetica().
+   
+   3. Se calcula las derivadas
+            (i       |
+           d P_n(x)  |
+   c (i) = --------- |
+              (i     |
+           d x       | x = z
+</span><span class="comment-delimiter">*/</span>
+
+<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="string">&lt;stdlib.h&gt;</span>
+<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="string">&lt;math.h&gt;</span>
+
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="variable-name">MAX</span> 100
+
+<span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="function-name">main</span> (<span class="type">int</span> <span class="variable-name">argc</span>, <span class="type">char</span> *<span class="variable-name">argv</span>[]) {
+    <span class="comment-delimiter">/</span><span class="comment-delimiter">*</span><span class="comment">prototype</span><span class="comment-delimiter">*/</span>
+    <span class="type">v</span><span class="type">oi</span><span class="type">d</span> <span class="variable-name">leerCoeficientes</span>(<span class="type">int</span>, <span class="type">double</span> *);
+    <span class="type">voi</span><span class="type">d</span> <span class="variable-name">divisionSintetica</span>(<span class="type">int</span>, <span class="type">double</span>, <span class="type">double</span> *, <span class="type">double</span> *);
+    <span class="type">voi</span><span class="type">d</span> <span class="variable-name">calcularDerivadas</span>(<span class="type">int</span>, <span class="type">double</span> *, <span class="type">double</span> *);
+    <span class="type">voi</span><span class="type">d</span> <span class="variable-name">escribirResultados</span>(<span class="type">int</span>, <span class="type">double</span>, <span class="type">double</span> *, <span class="type">double</span> *, <span class="type">double</span> *);
+    <span class="comment-delimiter">/</span><span class="comment-delimiter">*</span><span class="comment">variables</span><span class="comment-delimiter">*/</span>
+    <span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="variable-name">n</span>; <span class="comment-delimiter">/</span><span class="comment-delimiter">/</span><span class="comment">polinomial's grade
+</span>
+    <span class="keyword">do</span>{
+        printf(<span class="string">&quot;\n Introduce el grado del polinomio (max=100) -&gt; n = &quot;</span>);
+        scanf(<span class="string">&quot;%d&quot;</span>, &amp;n);
+    } <span class="keyword">while</span> (n &lt;= 0 || n &gt;= 100);
+    <span class="type">doubl</span><span class="type">e</span> <span class="variable-name">a</span>[n];
+    <span class="type">doubl</span><span class="type">e</span> <span class="variable-name">b</span>[n];
+    <span class="type">doubl</span><span class="type">e</span> <span class="variable-name">c</span>[n];
+
+    <span class="type">doubl</span><span class="type">e</span> <span class="variable-name">z</span>;
+    printf(<span class="string">&quot;\n Introduce el punto de calculo -&gt; z = &quot;</span>);
+    scanf(<span class="string">&quot;%lf&quot;</span>, &amp;z);
+
+    <span class="comment-delimiter">/</span><span class="comment-delimiter">*</span><span class="comment">call methods</span><span class="comment-delimiter">*/</span>
+    leerCoeficientes(n,a);
+    divisionSintetica(n,z,a,b);
+    calcularDerivadas(n,b,c);
+    escribirResultados(n,z,a,b,c);
+    
+    <span class="comment-delimiter">/</span><span class="comment-delimiter">*</span><span class="comment">wait for user keyboard</span><span class="comment-delimiter">*/</span>
+    fflush(stdin); getchar();
+    
+    <span class="keyword">return</span> 0;
+} <span class="comment-delimiter">//</span><span class="comment">end of method main
+</span></pre>
+
+ </body>
+</html>

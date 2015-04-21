@@ -1,0 +1,13 @@
+//bucle con variables reales
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+	double start;
+	double step = 1;
+	double fin = 10;
+
+  for(start = 0; start < fin ; start++)
+    printf("\n El valor de x es : %24.18f",start);
+  return 0;
+}
