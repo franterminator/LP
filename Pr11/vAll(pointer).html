@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>vAll(pointer).c</title>
+<meta name="generator" content="emacs 24.4.1; htmlfontify 0.21" />
+<style type="text/css"><!-- 
+body { font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #e1e1e0;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.default   { font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #e1e1e0;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.default a { font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #e1e1e0;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.keyword   { color: #ffad29;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.keyword a { color: #ffad29;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.constant   { color: #008b8b;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.constant a { color: #008b8b;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.function-name   { color: #00ede1;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.function-name a { color: #00ede1;  font-weight: 700;  font-family: Courier New;  font-stretch: normal;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.type   { color: #34cae2;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.type a { color: #34cae2;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.negation-char   { font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #e1e1e0;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.negation-char a { font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #e1e1e0;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.comment   { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.comment a { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.comment-delimiter   { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.comment-delimiter a { color: #74af68;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.variable-name   { color: #dbdb95;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.variable-name a { color: #dbdb95;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.preprocessor   { color: #23d7d7;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.preprocessor a { color: #23d7d7;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+span.string   { color: #e67128;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: none; }
+span.string a { color: #e67128;  font-family: Courier New;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #2d3743;  font-size: 10pt;  text-decoration: underline; }
+ --></style>
+
+    <script type="text/javascript"><!--
+  // this function is needed to work around
+  // a bug in IE related to element attributes
+  function hasClass(obj)
+  {
+      var result = false;
+      if (obj.getAttributeNode("class") != null)
+      {
+          result = obj.getAttributeNode("class").value;
+      }
+      return result;
+  }
+
+  function stripe(id)
+  {
+      // the flag we'll use to keep track of
+      // whether the current row is odd or even
+      var even = false;
+
+      // if arguments are provided to specify the colors
+      // of the even & odd rows, then use the them;
+      // otherwise use the following defaults:
+      var evenColor = arguments[1] ? arguments[1] : "#fff";
+      var oddColor  = arguments[2] ? arguments[2] : "#ddd";
+
+      // obtain a reference to the desired table
+      // if no such table exists, abort
+      var table = document.getElementById(id);
+      if (! table) { return; }
+
+      // by definition, tables can have more than one tbody
+      // element, so we'll have to get the list of child
+      // &lt;tbody&gt;s
+      var tbodies = table.getElementsByTagName("tbody");
+
+      // and iterate through them...
+      for (var h = 0; h < tbodies.length; h++)
+      {
+          // find all the &lt;tr&gt; elements...
+          var trs = tbodies[h].getElementsByTagName("tr");
+
+          // ... and iterate through them
+          for (var i = 0; i < trs.length; i++)
+          {
+              // avoid rows that have a class attribute
+              // or backgroundColor style
+              if (! hasClass(trs[i]) &&
+                  ! trs[i].style.backgroundColor)
+              {
+                  // get all the cells in this row...
+                  var tds = trs[i].getElementsByTagName("td");
+
+                  // and iterate through them...
+                  for (var j = 0; j < tds.length; j++)
+                  {
+                      var mytd = tds[j];
+
+                      // avoid cells that have a class attribute
+                      // or backgroundColor style
+                      if (! hasClass(mytd) &&
+                          ! mytd.style.backgroundColor)
+                      {
+                          mytd.style.backgroundColor =
+                            even ? evenColor : oddColor;
+                      }
+                  }
+              }
+              // flip from odd to even, or vice-versa
+              even =  ! even;
+          }
+      }
+  }
+
+  function toggle_invis( name )
+  {
+      var filter =
+        { acceptNode:
+          function( node )
+          { var classname = node.id;
+            if( classname )
+            { var classbase = classname.substr( 0, name.length );
+              if( classbase == name ) { return NodeFilter.FILTER_ACCEPT; } }
+            return NodeFilter.FILTER_SKIP; } };
+      var walker = document.createTreeWalker( document.body           ,
+                                              NodeFilter.SHOW_ELEMENT ,
+                                              filter                  ,
+                                              false                   );
+      while( walker.nextNode() )
+      {
+          var e = walker.currentNode;
+          if( e.style.display == "none" ) { e.style.display = "inline"; }
+          else                            { e.style.display = "none";   }
+      }
+  }
+--> </script>
+  </head>
+  <body onload="stripe('index'); return true;">
+
+<pre>c#define HELP \
+<span class="string">&quot;											\n\
+  Este programa muestra								\n\
+											\n\
+	  a) los bytes (1 byte &lt;-&gt; 2 digitos en base 16) o		\n\
+	  b) los bits  (1 bit  &lt;-&gt; 1 digito  en base 2)			\n\
+											\n\
+  que componen un archivo.							\n\
+											\n\
+  Forma de uso:									\n\
+											\n\
+	&gt; vuelca [InputFileName] [-o OutputFileName] [-B | -b] [-s] \n\
+											\n\
+    tambien:									\n\
+											\n\
+	&gt; vuelca  InputFileName  [   OutputfileName] [-B | -b] [-s] \n\
+											\n\
+  OPCIONES										\n\
+											\n\
+	-B										\n\
+		Muestra bytes (1 byte &lt;-&gt; 2 digitos en base 16).	\n\
+		Esta es la opcion por defecto.				\n\
+											\n\
+	-b										\n\
+		Muestra bits  (1 bit  &lt;-&gt; 1 digito  en base 2).		\n\
+		La opcion por defecto es -B.					\n\
+											\n\
+	-S, -s									\n\
+		Sin informacion adicional					\n\
+		(numeracion de bytes y significado alfanumerico).	\n\
+											\n\
+	-O, -o  OutputFileName							\n\
+											\n\
+		Nombre del archivo de salida.					\n\
+</span><span class="string">		Si se omite, se utilizara el archivo out.txt.		\n\
+											\n\
+	--help									\n\
+											\n\
+		Imprime esta informacion.					\n\
+											\n\
+  OPERANDOS										\n\
+											\n\
+	InputFileName								\n\
+											\n\
+		Nombre del archivo de entrada.				\n\
+		Si se omite, se utilizara la entrada estandar (stdin).\n\
+											\n\
+	OutputFileName								\n\
+											\n\
+		Nombre del archivo de salida.					\n\
+		Si se omite, se utilizara el archivo out.txt.		\n\
+											\n\
+&quot;</span>
+
+<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="string">&lt;stdlib.h&gt;</span>
+<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="string">&lt;ctype.h&gt;</span>
+<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="string">&lt;string.h&gt;</span>
+
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="variable-name">NCLB</span> 32  <span class="comment-delimiter">/* </span><span class="comment">numero de caracteres por linea cuando se muestran bytes </span><span class="comment-delimiter">*/</span>
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="variable-name">NCLb</span>  8  <span class="comment-delimiter">/* </span><span class="comment">numero de caracteres por linea cuando se muestran bits  </span><span class="comment-delimiter">*/</span>
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="variable-name">NCL</span>  32  <span class="comment-delimiter">/* </span><span class="comment">maximo de los dos anteriores                            </span><span class="comment-delimiter">*/</span>
+
+<span class="preprocessor">#</span><span class="preprocessor">if</span><span class="preprocessor">n</span><span class="preprocessor">def</span> FALSE
+<span class="preprocessor">	</span><span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="variable-name">FALSE</span> 0
+<span class="preprocessor">#</span><span class="preprocessor">endif</span>
+
+<span class="preprocessor">#</span><span class="preprocessor">if</span><span class="preprocessor">n</span><span class="preprocessor">def</span> TRUE
+<span class="preprocessor">	</span><span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="variable-name">TRUE</span> <span class="negation-char">!</span>FALSE
+<span class="preprocessor">#</span><span class="preprocessor">endif</span>
+
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="variable-name">INDEFINIDO</span> -1
+
+<span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="function-name">main</span>(<span class="type">int</span> <span class="variable-name">argc</span>, <span class="type">char</span> **<span class="variable-name">argv</span>)	   <span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">tambien se puede poner *argv[] en lugar de **argv </span><span class="comment-delimiter">*/</span>
+{
+	<span class="type">voi</span><span class="type">d</span> <span class="variable-name">Volcar</span>(<span class="type">char</span> *, <span class="type">FILE</span> *, <span class="type">FILE</span> *, <span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>);
+	<span class="type">voi</span><span class="type">d</span> <span class="variable-name">FatalError</span>(<span class="type">char</span> *, <span class="type">char</span> *, <span class="type">char</span> *, <span class="type">int</span>);
+
+	<span class="type">FIL</span><span class="type">E</span> *<span class="variable-name">fpIn</span>  = stdin,
+           *<span class="variable-name">fpOut</span> = <span class="constant">NULL</span>;
+
+	<span class="type">in</span><span class="type">t</span>  <span class="variable-name">VerBits</span> = INDEFINIDO, <span class="variable-name">AdInfo</span> = INDEFINIDO,
+	     <span class="variable-name">nclMax</span>;
+
+	<span class="type">cha</span><span class="type">r</span> *<span class="variable-name">InputFileName</span>  = <span class="constant">NULL</span>,
+	     *<span class="variable-name">OutputFileName</span> = <span class="constant">NULL</span>;
+
+
+	<span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">Procesamiento del command-line: argv se interpreta como un puntero a un puntero </span><span class="comment-delimiter">*/</span>
+
+	<span class="type">c</span><span class="type">ha</span><span class="type">r</span> **<span class="variable-name">argp</span>;
+
+	<span class="keyword">for</span> (argp = argv + 1; argp &lt; argv + argc; argp++) {
+		<span class="type">cha</span><span class="type">r</span> *<span class="variable-name">c</span>;
+		c = *argp;
+
+	      <span class="keyword">if</span> (*c == <span class="string">'-'</span>) {  <span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">Opciones ... </span><span class="comment-delimiter">*/</span>
+			c++;
+			<span class="keyword">if</span> (*c == <span class="string">'-'</span>) {	<span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">... de varias letras </span><span class="comment-delimiter">*/</span>
+				c++;
+				<span class="keyword">if</span> (strcmp(c, <span class="string">&quot;help&quot;</span>) == 0) {
+					fprintf(stderr, <span class="string">&quot;\n%s:\n%s\n&quot;</span>, *argv, HELP);
+					exit(0);
+
+				} <span class="keyword">else</span> FatalError(<span class="string">&quot;%s: opcion desconocida [%s]\n&quot;</span>, *argv, *argp, 1);
+
+			} <span class="keyword">else</span> <span class="keyword">if</span> ((strlen(c) == 1) &amp;&amp; (strchr(<span class="string">&quot;Oo&quot;</span>, *c))) { <span class="comment-delimiter">/* </span><span class="comment">... de 1 letra con arg. adicional </span><span class="comment-delimiter">*/</span>
+				<span class="keyword">if</span> (argp + 1 == argv + argc)
+					FatalError(<span class="string">&quot;%s: falta argumento de [%s]\n&quot;</span>, *argv, *argp, 5);
+				<span class="keyword">else</span>
+					<span class="keyword">switch</span> (*c) {
+						<span class="keyword">case</span> <span class="string">'O'</span>: <span class="keyword">case</span> <span class="string">'o'</span>:
+							argp++;
+							<span class="keyword">if</span> (OutputFileName == <span class="constant">NULL</span>) OutputFileName = *argp;
+							<span class="keyword">else</span> FatalError(<span class="string">&quot;%s: varios OutputFiles\n&quot;</span>, *argv, <span class="constant">NULL</span>, 6);
+							<span class="keyword">break</span>;
+
+					}
+
+			} <span class="keyword">else</span> {		<span class="comment-delimiter">/* </span><span class="comment">... de otra letra sin argumentos adicionales (por separado o agrupada) </span><span class="comment-delimiter">*/</span>
+				<span class="keyword">while</span>(*c != <span class="string">'\0'</span>)
+					<span class="keyword">switch</span> (*c) {
+						<span class="keyword">case</span> <span class="string">'B'</span>:
+							<span class="keyword">if</span> (VerBits == INDEFINIDO) VerBits = FALSE;
+							<span class="keyword">else</span> FatalError(<span class="string">&quot;%s: varias opciones [-B | -b]\n&quot;</span>, *argv, <span class="constant">NULL</span>, 4);
+							c++; <span class="keyword">break</span>;	<span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">siguiente letra </span><span class="comment-delimiter">*/</span>
+
+						<span class="keyword">c</span><span class="keyword">ase</span> <span class="string">'b'</span>:
+							<span class="keyword">if</span> (VerBits == INDEFINIDO) VerBits = TRUE;
+							<span class="keyword">else</span> FatalError(<span class="string">&quot;%s: varias opciones [-B | -b]\n&quot;</span>, *argv, <span class="constant">NULL</span>, 4);
+							c++; <span class="keyword">break</span>;	<span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">siguiente letra </span><span class="comment-delimiter">*/</span>
+
+						<span class="keyword">c</span><span class="keyword">ase</span> <span class="string">'S'</span>: <span class="keyword">case</span> <span class="string">'s'</span>:
+							<span class="keyword">if</span> (AdInfo == INDEFINIDO) AdInfo = FALSE;
+							<span class="keyword">else</span> FatalError(<span class="string">&quot;%s: varias opciones [-S | -s]\n&quot;</span>, *argv, <span class="constant">NULL</span>, 4);
+							c++; <span class="keyword">break</span>; <span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">siguiente letra </span><span class="comment-delimiter">*/</span>
+
+						<span class="keyword">d</span><span class="keyword">efault</span>:
+							FatalError(<span class="string">&quot;%s: opcion desconocida [%s]\n&quot;</span>, *argv, *argp, 1);
+							c++; <span class="keyword">break</span>; <span class="comment-delimiter">/* </span><span class="comment">siguiente letra, si se da el caso </span><span class="comment-delimiter">*/</span>
+
+					}
+	
+			}
+
+		} <span class="keyword">else</span> {	      <span class="comment-delimiter">/* </span><span class="comment">Operandos: InputFile o OutputFile </span><span class="comment-delimiter">*/</span>
+			<span class="keyword">if</span> (InputFileName == <span class="constant">NULL</span>) InputFileName = *argp;
+			<span class="keyword">else</span> <span class="keyword">if</span> (OutputFileName == <span class="constant">NULL</span>) OutputFileName = *argp;
+			<span class="keyword">else</span> FatalError(<span class="string">&quot;%s: varios OutputFiles\n&quot;</span>, *argv, <span class="constant">NULL</span>, 6);
+
+		}
+
+	}
+
+
+	<span class="comment-delimiter">/* </span><span class="comment">Opciones por defecto </span><span class="comment-delimiter">*/</span>
+
+	<span class="keyword">if</span> (VerBits == INDEFINIDO) VerBits = FALSE;
+	<span class="keyword">if</span> (AdInfo == INDEFINIDO) AdInfo = TRUE;
+
+	<span class="comment-delimiter">/* </span><span class="comment">Apertura de archivos (en su caso) </span><span class="comment-delimiter">*/</span>
+
+	<span class="keyword">if</span> (InputFileName) {
+		<span class="keyword">if</span> (<span class="negation-char">!</span>(fpIn  = fopen(InputFileName, <span class="string">&quot;rb&quot;</span>)))
+			FatalError(<span class="string">&quot;%s: imposible abrir el archivo %s para lectura\n&quot;</span>,
+				*argv, InputFileName, 2);
+	}
+
+	<span class="keyword">if</span> (OutputFileName) {
+		<span class="keyword">if</span> (<span class="negation-char">!</span>(fpOut = fopen(OutputFileName, <span class="string">&quot;wb&quot;</span>)))
+			FatalError(<span class="string">&quot;%s: imposible abrir el archivo %s para escritura\n&quot;</span>,
+			       *argv, OutputFileName, 3);
+	} <span class="keyword">else</span> {
+		<span class="keyword">if</span> (<span class="negation-char">!</span>(fpOut = fopen(<span class="string">&quot;out.txt&quot;</span>, <span class="string">&quot;wb&quot;</span>)))
+			FatalError(<span class="string">&quot;%s: imposible abrir el archivo %s para escritura\n&quot;</span>,
+			       *argv, <span class="string">&quot;out.txt&quot;</span>,3);
+	}
+
+
+	<span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">Volcado </span><span class="comment-delimiter">*/</span>
+
+	Volcar(*argv, fpIn, fpOut, VerBits, AdInfo, VerBits ? NCLb : NCLB);
+
+
+	exit(0);
+
+}
+
+
+<span class="comment-delimiter">/</span><span class="comment-delimiter">*</span><span class="comment">____________________________________________________________________Volcar__</span><span class="comment-delimiter">*/</span>
+
+<span class="type">v</span><span class="type">oi</span><span class="type">d</span> <span class="function-name">Volcar</span>(<span class="type">char</span> *<span class="variable-name">ProgName</span>, <span class="type">FILE</span> *<span class="variable-name">fpIn</span>, <span class="type">FILE</span> *<span class="variable-name">fpOut</span>, <span class="type">int</span> <span class="variable-name">VerBits</span>, <span class="type">int</span> <span class="variable-name">AdInfo</span>, <span class="type">int</span> <span class="variable-name">nclMax</span>)
+{
+	<span class="type">in</span><span class="type">t</span>  <span class="variable-name">c</span>,
+	     <span class="variable-name">ncl</span> = 0, <span class="variable-name">nct</span> = 0;
+
+	<span class="type">cha</span><span class="type">r</span> <span class="variable-name">text</span>[NCL + 1];
+
+	text[nclMax] = <span class="string">'\0'</span>;
+
+	<span class="comment-delimiter">/* </span><span class="comment">Leemos el archivo de entrada </span><span class="comment-delimiter">*/</span>
+	<span class="keyword">while</span> ((c = getc(fpIn)) != EOF) {
+	
+		<span class="comment-delimiter">/* </span><span class="comment">Al principio de la linea se indican los bytes que se mostraran </span><span class="comment-delimiter">*/</span>
+		<span class="keyword">if</span> (AdInfo &amp;&amp; (ncl == 0))
+			fprintf(fpOut, <span class="string">&quot;[%10.10d-%10.10d] :: &quot;</span>, nct + 1, nct + nclMax);
+		
+		<span class="comment-delimiter">/* </span><span class="comment">Si el caracter no es imprimible se pone un punto centrado </span><span class="comment-delimiter">*/</span>
+		<span class="keyword">if</span> (AdInfo) text[ncl++] = isprint(c) ? c : <span class="string">'·'</span>;
+		
+		<span class="comment-delimiter">/* </span><span class="comment">Escribimos el byte en forma de ... </span><span class="comment-delimiter">*/</span>
+		<span class="keyword">if</span> (VerBits) {                                     <span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">... 8 bits, </span><span class="comment-delimiter">*/</span>
+			<span class="type">i</span><span class="type">n</span><span class="type">t</span>  <span class="variable-name">b</span>;
+			<span class="keyword">for</span> (b = 7; b &gt;= 0; b--)
+				fprintf(fpOut, <span class="string">&quot;%1d&quot;</span>, (<span class="type">unsigned</span>) (c &gt;&gt; b &amp; ~(~0 &lt;&lt; 1)));
+			
+		} <span class="keyword">else</span> {                            <span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">... o de dos hexadecimales </span><span class="comment-delimiter">*/</span> 
+				fprintf(fpOut, <span class="string">&quot;%2.2X&quot;</span>, c);
+		}
+
+		<span class="comment-delimiter">/* </span><span class="comment">En su caso, ... </span><span class="comment-delimiter">*/</span>
+		<span class="keyword">if</span> (++nct % nclMax == 0) {              <span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">... terminamos la fila </span><span class="comment-delimiter">*/</span>
+			<span class="keyword">i</span><span class="keyword">f</span> (AdInfo) fprintf(fpOut, <span class="string">&quot; &lt;-&gt; %s\n&quot;</span>, text);
+			<span class="keyword">else</span> fprintf(fpOut,<span class="string">&quot;\n&quot;</span>);
+			ncl = 0;
+		
+		} <span class="keyword">else</span> {
+			<span class="keyword">if</span> (VerBits) fprintf(fpOut, <span class="string">&quot; &quot;</span>); <span class="comment-delimiter">/* </span><span class="comment">o ponemos un separador </span><span class="comment-delimiter">*/</span>
+		}
+	
+		<span class="comment-delimiter">/* </span><span class="comment">Dejamos una linea en blanco cada KiB </span><span class="comment-delimiter">*/</span>
+		<span class="keyword">if</span> (nct % 1024 == 0)
+			fprintf(fpOut, <span class="string">&quot;\n&quot;</span>);
+	}
+
+	<span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">Rellenamos con blancos la ultima linea y la terminamos </span><span class="comment-delimiter">*/</span>
+	<span class="keyword">i</span><span class="keyword">f</span> (ncl &gt; 0) {
+		<span class="keyword">while</span> (ncl &lt; nclMax) {
+			<span class="keyword">if</span> (AdInfo) text[ncl++] = <span class="string">' '</span>;
+			<span class="keyword">if</span> (VerBits) {
+				fprintf(fpOut, <span class="string">&quot;         &quot;</span>);
+			} <span class="keyword">else</span> {
+				fprintf(fpOut, <span class="string">&quot;  &quot;</span>);
+			}
+		}
+	
+		<span class="keyword">if</span> (AdInfo) fprintf(fpOut, <span class="string">&quot; &lt;-&gt; %s\n&quot;</span>, text);
+		<span class="keyword">else</span> fprintf(fpOut,<span class="string">&quot;\n&quot;</span>);
+	}
+
+	<span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">Finalmente indicamos cuantos bytes se han procesado </span><span class="comment-delimiter">*/</span>
+	fprintf(stderr, <span class="string">&quot;%s: %10d bytes volcados\n&quot;</span>, ProgName, nct);
+
+}
+
+<span class="comment-delimiter">/</span><span class="comment-delimiter">*</span><span class="comment">________________________________________________________________FatalError__</span><span class="comment-delimiter">*/</span>
+
+<span class="type">v</span><span class="type">oi</span><span class="type">d</span> <span class="function-name">FatalError</span>(<span class="type">char</span> *<span class="variable-name">formato</span>, <span class="type">char</span> *<span class="variable-name">ProgName</span>, <span class="type">char</span> *<span class="variable-name">argumento</span>, <span class="type">int</span> <span class="variable-name">ierr</span>)
+{
+	fprintf(stderr, formato, ProgName, argumento);
+	exit(ierr);
+}
+</pre>
+
+ </body>
+</html>
